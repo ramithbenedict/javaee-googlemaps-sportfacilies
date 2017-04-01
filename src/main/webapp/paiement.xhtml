@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" >
+    
+    <h:head>
+        <title>Paiement</title>
+        <h:outputStylesheet name="css/index.css"/>
+        <f:metadata>
+            <f:viewParam name="creneau" value="#{creneauController.selectedCreneau}" converter="#{creneauConverter}" required="true" />
+            <f:viewAction action="#{utilisateurController.check}" />
+        </f:metadata>
+    </h:head>
+    
+    <h:body>        
+
+        <div class="log" style="font-size: 25px; width: 100%; height: 40px; padding : 0 0 0 0;">   
+            <div style="width:40%; height: 100%;float: left;">
+                <h:form>
+                    <h:commandButton value="retour" style = "width: 50px; float: left;" action="installation?faces-redirect=true" image="resources/images/retour.png" />
+                </h:form>
+            </div>
+
+            <div style=" width: 30%; float: right; text-align: center;">
+                <h:form>
+                    <h:commandButton action="#{utilisateurController.logout}" style="height: 30px; width: 30px; float: right;"  image="resources/images/deconnection.png"/>
+                    <h:outputText value="#{utilisateurController.selected.prenom} #{utilisateurController.selected.nom} " 
+                                  style="color:blue; font-size: 30px; font-family: Arial, Helvetica, sans-serif; float: right; float: bottom;padding-right: 3%;">
+                    </h:outputText>
+                </h:form>
+            </div>
+        </div>
+
+        <div class="container2"><center>
+                             <h:commandButton action="#{some_action}" image="resources/css/CB.png" style="width: 90%;"/>
+                             <h1 style="text-shadow: 10px 5px 5px #767676;">Paiement</h1>
+        
+        <h:form id="register-form" >
+        	<p:focus />
+        
+        	<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel styleClass="text" value="Date :" />
+                        <p:outputLabel styleClass="text2" value="#{creneauController.selectedCreneau.dateCreneau.date}/#{creneauController.selectedCreneau.dateCreneau.month}/#{creneauController.selectedCreneau.dateCreneau.year+1900}" />
+                        
+                        <p:outputLabel styleClass="text" value="Horaire :" />
+                        <p:outputLabel styleClass="text2" value="#{creneauController.selectedCreneau.heure}h00-#{creneauController.selectedCreneau.heure+1}h00" />
+                        
+                        <p:outputLabel styleClass="text" value="Montant de la transaction :" />
+                        <p:outputLabel styleClass="text2" value="#{creneauController.selectedCreneau.prix}0 €" />
+                    
+                        <p:outputLabel styleClass="text" for="surname" value="Numéro de la carte bancaire :" />
+	        	<p:inputText id="surname" required="true" requiredMessage="Veuillez entrer un numéro" />
+	        	
+        	
+	        	<p:outputLabel styleClass="text" for="firstname" value="Date d'expiration :" />
+	        	<p:inputText id="firstname" required="true" requiredMessage="Veuillez entrer un prénom." />
+	        	        	
+	        	<p:outputLabel styleClass="text" for="email" value="Code de vérification :" />
+	        	<p:inputText id="email" required="true" requiredMessage="Veuillez entrer un email valide." />
+	         </p:panelGrid>
+                <p:commandButton styleClass="button" value="Payer" update="register-form" action="#{creneauController.reservation(utilisateurController.selected.numUtilisateur)}" />
+        </h:form></center>
+        </div>
+    </h:body>
+</html>

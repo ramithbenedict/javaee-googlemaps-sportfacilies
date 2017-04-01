@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <f:metadata>
+            <f:viewAction action="#{utilisateurController.checkAdmin}" />
+        </f:metadata>
+    </h:head>
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListInstallationactiviteTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="InstallationactiviteListForm">
+                <p:panel header="#{bundle.ListInstallationactiviteTitle}">
+                    <p:dataTable id="datalist" value="#{installationactiviteController.items}" var="item"
+                                 selectionMode="single" selection="#{installationactiviteController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.installationactivitePK}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationactiviteTitle_installationactivitePK_numInstallation}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.installationactivitePK.numInstallation}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationactiviteTitle_installationactivitePK_numActivite}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.installationactivitePK.numActivite}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{installationactiviteController.prepareCreate}" update=":InstallationactiviteCreateForm" oncomplete="PF('InstallationactiviteCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":InstallationactiviteViewForm" oncomplete="PF('InstallationactiviteViewDialog').show()" disabled="#{empty installationactiviteController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":InstallationactiviteEditForm" oncomplete="PF('InstallationactiviteEditDialog').show()" disabled="#{empty installationactiviteController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{installationactiviteController.destroy}" update=":growl,datalist" disabled="#{empty installationactiviteController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="fr"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" >
+    <h:head>
+        <title>Accueil</title>
+        <h:outputStylesheet name="css/index.css"/>
+    </h:head>
+
+    <h:body>
+        <center>
+        <div class="container2">
+            <h1 style="text-shadow: 10px 5px 5px #767676;">Authentification</h1>
+    	
+        <h:form id="signin-form">
+        	<p:focus />
+        	
+        	<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+	        	<p:outputLabel styleClass="text" for="email" value="Email :" />
+	        	<p:inputText id="email" required="true" value="#{utilisateurController.email}" requiredMessage="Veuillez entrer votre email." />
+	        	<p:message for="email" />
+        	
+	        	<p:outputLabel styleClass="text" for="pwd" value="Mot de passe :" />
+	        	<p:password id="pwd" required="true" value="#{utilisateurController.mdp}" requiredMessage="Veuillez entrer votre mot de passe." />
+	        	<p:message for="pwd" />
+        	</p:panelGrid>
+        	
+        	<p:commandButton styleClass="button" value="Connexion" update="signin-form" action="#{utilisateurController.login}" />
+                <p:growl for="login" />
+        </h:form>
+        
+        <h3>Pas encore inscrit ?</h3>
+        <p:button styleClass="button2" value="Créer un compte" outcome="inscription" />
+        
+        </div>
+        </center>
+    </h:body>
+
+</html>
+

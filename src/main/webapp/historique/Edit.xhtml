@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <f:metadata>
+            <f:viewAction action="#{utilisateurController.checkAdmin}" />
+        </f:metadata>
+    </h:head>
+    <ui:composition>
+
+        <p:dialog id="HistoriqueEditDlg" widgetVar="HistoriqueEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditHistoriqueTitle}">
+            <h:form id="HistoriqueEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{historiqueController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditHistoriqueLabel_numHistorique}" for="numHistorique" />
+                        <p:inputText id="numHistorique" value="#{historiqueController.selected.numHistorique}" title="#{bundle.EditHistoriqueTitle_numHistorique}" required="true" requiredMessage="#{bundle.EditHistoriqueRequiredMessage_numHistorique}"/>
+                        <p:outputLabel value="#{bundle.EditHistoriqueLabel_activite}" for="activite" />
+                        <p:inputText id="activite" value="#{historiqueController.selected.activite}" title="#{bundle.EditHistoriqueTitle_activite}" />
+                        <p:outputLabel value="#{bundle.EditHistoriqueLabel_dateRecherche}" for="dateRecherche" />
+                        <p:calendar id="dateRecherche" pattern="MM/dd/yyyy" value="#{historiqueController.selected.dateRecherche}" title="#{bundle.EditHistoriqueTitle_dateRecherche}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditHistoriqueLabel_lieuRecherche}" for="lieuRecherche" />
+                        <p:inputText id="lieuRecherche" value="#{historiqueController.selected.lieuRecherche}" title="#{bundle.EditHistoriqueTitle_lieuRecherche}" />
+                        <p:outputLabel value="#{bundle.EditHistoriqueLabel_numUtilisateur}" for="numUtilisateur" />
+                        <p:selectOneMenu id="numUtilisateur" value="#{historiqueController.selected.numUtilisateur}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{utilisateurController.itemsAvailableSelectOne}"
+                                           var="numUtilisateurItem"
+                                           itemValue="#{numUtilisateurItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{historiqueController.update}" value="#{bundle.Save}" update="display,:HistoriqueListForm:datalist,:growl" oncomplete="handleSubmit(args, 'HistoriqueEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="HistoriqueEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

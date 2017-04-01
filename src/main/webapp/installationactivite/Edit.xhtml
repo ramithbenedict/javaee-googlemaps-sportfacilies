@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <f:metadata>
+            <f:viewAction action="#{utilisateurController.checkAdmin}" />
+        </f:metadata>
+    </h:head>
+    <ui:composition>
+
+        <p:dialog id="InstallationactiviteEditDlg" widgetVar="InstallationactiviteEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditInstallationactiviteTitle}">
+            <h:form id="InstallationactiviteEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{installationactiviteController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditInstallationactiviteLabel_installationactivitePK_numInstallation}" for="installationactivitePK_numInstallation" />
+                        <p:inputText id="installationactivitePK_numInstallation" value="#{installationactiviteController.selected.installationactivitePK.numInstallation}" title="#{bundle.EditInstallationactiviteTitle_installationactivitePK_numInstallation}" required="true" requiredMessage="#{bundle.EditInstallationactiviteRequiredMessage_installationactivitePK_numInstallation}"/>
+                        <p:outputLabel value="#{bundle.EditInstallationactiviteLabel_installationactivitePK_numActivite}" for="installationactivitePK_numActivite" />
+                        <p:inputText id="installationactivitePK_numActivite" value="#{installationactiviteController.selected.installationactivitePK.numActivite}" title="#{bundle.EditInstallationactiviteTitle_installationactivitePK_numActivite}" required="true" requiredMessage="#{bundle.EditInstallationactiviteRequiredMessage_installationactivitePK_numActivite}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{installationactiviteController.update}" value="#{bundle.Save}" update="display,:InstallationactiviteListForm:datalist,:growl" oncomplete="handleSubmit(args, 'InstallationactiviteEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="InstallationactiviteEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

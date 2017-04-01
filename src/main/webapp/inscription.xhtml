@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui" >
+    
+    <h:head>
+        <title>Inscription</title>
+        <h:outputStylesheet name="css/index.css"/>
+    </h:head>
+
+    <h:body>               
+        <div class="log" style="font-size: 25px; width: 100%; height: 40px; padding : 0 0 0 0;">   
+            <div style="width:40%; height: 100%;float: left;">
+                <h:form>
+                    <h:commandButton value="retour" style = "width: 50px; float: left;" action="index?faces-redirect=true" image="resources/images/retour.png" />
+                </h:form>
+            </div>
+
+        </div>
+
+        <div class="container2"><center>
+                <h1 style="text-shadow: 10px 5px 5px #767676;">Inscription</h1>
+
+                <h:form id="register-form" >
+                    <p:focus />
+                    <p:panelGrid columns="3" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel styleClass="text" for="surname" value="Nom :" />
+                        <p:inputText id="surname" required="true" requiredMessage="Veuillez entrer un nom." value="#{utilisateurController.nom}" />
+                        <p:message for="surname" />
+
+                        <p:outputLabel styleClass="text" for="firstname" value="Prénom :" />
+                        <p:inputText id="firstname" required="true" requiredMessage="Veuillez entrer un prénom." value="#{utilisateurController.prenom}"/>
+                        <p:message for="firstname" />
+
+                        <p:outputLabel styleClass="text" for="email" value="Email :" />
+                        <p:inputText id="email" type="email" required="true" requiredMessage="Veuillez entrer un email valide." value="#{utilisateurController.email}"/>
+                        <p:message for="email" />
+
+                        <p:outputLabel styleClass="text" for="phone" value="Téléphone :" />
+                        <p:inputText id="phone" type="tel" required="false" value="#{utilisateurController.numTel}"/>
+                        <p:message for="phone" />
+
+                        <p:outputLabel styleClass="text" for="pwd" value="Mot de passe :" />
+                        <p:password id="pwd" required="true" requiredMessage="Veuillez entrer un mot de passe." value="#{utilisateurController.mdp}"/>
+                        <p:message for="pwd" />
+                    </p:panelGrid>
+                    <p:growl for="email" />
+                    <p:commandButton style="background-color: green; color: white;" value="S'inscrire" update="register-form" action="#{utilisateurController.addUser}"/>
+                </h:form>
+                <h:form>
+                    <p:commandButton style="background-color: red; color: white;" value="Retour" action="index?faces-redirect=true"/>
+                </h:form>
+            </center>
+        </div>
+    </h:body>
+</html>

@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title>Historique de recherche</title>
+        <h:outputStylesheet name="css/index.css"/>
+        <f:metadata>
+                        <f:viewAction action="#{utilisateurController.check}" />
+        </f:metadata>
+    </h:head>
+
+    <h:body>
+        <div class="log" style="font-size: 25px; width: 100%; height: 40px; padding : 0 0 0 0;">   
+            <div style="width:40%; height: 100%;float: left;">
+                <h:form>
+                    <h:commandButton value="retour" style = "width: 50px; float: left;" action="recherche?faces-redirect=true" image="resources/images/retour.png" />
+                </h:form>
+            </div>
+
+            <div style=" width: 30%; float: right; text-align: center;">
+                <h:form>
+                    <h:commandButton action="#{utilisateurController.logout}" style="height: 30px; width: 30px; float: right;"  image="resources/images/deconnection.png"/>
+                    <h:outputText value="#{utilisateurController.selected.prenom} #{utilisateurController.selected.nom} " 
+                                  style="color:blue; font-size: 30px; font-family: Arial, Helvetica, sans-serif; float: right; float: bottom;padding-right: 3%;">
+                    </h:outputText>
+                </h:form>
+            </div>
+        </div>
+        <h1 style="text-shadow: 10px 5px 5px #767676;">Mon historique de recherche</h1>
+        <div style="width: 80%; height: 80%;">
+            <center>
+            <h:form >
+                <p:commandButton value="Tout supprimer" style="background-color: orange;" update="growl table" action="#{historiqueController.removeAll(utilisateurController.selected)}"/>
+            </h:form>
+                
+            </center>
+            <p:dataTable id="table" style= "padding-top: 10px; margin-left: auto; margin-left: auto; width: 80%; height: 80%" var="historique" value="#{historiqueController.findHistoriqueByNumUtilisateur(utilisateurController.selected)}">
+                <p:column headerText="Date" styleClass="pcolumn">
+                    <h:outputText value="#{historique.dateRecherche.day+1}/#{historique.dateRecherche.month+1}/#{historique.dateRecherche.year+1900}" />
+
+                </p:column>
+                <p:column headerText="Activité" styleClass="pcolumn">
+                    <h:outputText value="#{historique.activite}" />
+                </p:column>
+
+                <p:column headerText="Commune" styleClass="pcolumn">
+                    <h:outputText value="#{historique.lieuRecherche}" />
+                </p:column>
+                <p:column style="text-align: center;">
+                    <p:button value="voir" style="background-color: green; color: white;" outcome="recherche">
+                        <f:param name="activity" value="#{historique.activite}" rendered="#{historique.activite != null}" />
+                        <f:param name="place" value="#{historique.lieuRecherche}" />
+                    </p:button>
+                </p:column>
+
+                <p:column style="text-align: center;">
+                    <h:form >
+                        <p:commandButton value="supprimer" style="background-color: red; color: white;" update="growl table" action="#{historiqueController.remove(historique)}" />
+                    </h:form>
+                </p:column>
+
+            </p:dataTable>
+            <p:growl id="growl" for="suppression"/>
+        </div>
+    </h:body>
+</html>
+

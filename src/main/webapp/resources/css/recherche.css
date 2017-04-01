@@ -1,0 +1,60 @@
+body{
+    background-image: url(fond.png); 
+    background-size: cover; 
+    background-repeat: no-repeat;
+}
+
+h1{
+    color: blue;
+    font-family: "Arial", Times, serif;
+    font-size: 30px;
+    text-align: center;
+}
+.text{
+    color:blue;
+    font-size: 50px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.button{
+    background: none;                                
+    background-color: blue; /* Green */
+    border: white groove 2px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;  
+    margin:auto;
+}
+
+.button2{    
+    background: none;                                
+    background-color: red; /* Green */
+    border: white groove 2px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.button3{    
+    background: none;                                
+    background-color: green; /* Green */
+    border: white groove 2px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.mapInfo{
+    background-color: red;
+    color: olive;
+}

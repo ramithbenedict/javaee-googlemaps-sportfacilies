@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" >
+
+    <h:head>
+        <title>Recherche d'installations</title>
+
+        <h:outputStylesheet name="css/recherche.css"/>
+        <f:metadata>
+            <f:viewParam name="activity" value="#{installationController.activity}" />
+            <f:viewParam name="place" value="#{installationController.place}" />
+            <f:viewAction action="#{utilisateurController.check}" />
+            <f:viewAction action="#{installationController.onLoad(utilisateurController.selected)}" />
+        </f:metadata>
+        <script src="https://maps.google.com/maps/api/js?key=AIzaSyCuLRjWEDh8bXqXa2PP__T6petRjyljI_k" type="text/javascript"></script>
+        <script type="text/javascript">
+            function geoLoc(){
+                if (navigator.geolocation)
+                        {
+                            navigator.geolocation.getCurrentPosition(function(position)
+                            {
+                                geocode(position.coords.latitude + "," + position.coords.longitude);
+                            });
+                        }
+                    else
+                    alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
+            }
+    
+            function geocode(place){
+                if (typeof PF('geoMap') !== 'undefined')
+                    PF('geoMap').geocode(place);
+            }
+            
+            setTimeout(()=>{
+                var place = document.getElementById('search-form:place_input').value;
+                if(place === "")
+                    geoLoc();
+                else
+                    geocode(place);
+            }, 500); // Introduction d'un délai pour attendre le rendu de la carte
+        </script>
+    </h:head>
+
+    <h:body>
+        <div class="log" style="font-size: 25px; width: 100%; height: 40px; padding : 0 0 0 0;">   
+            <div style=" width: 30%; float: right; text-align: center;">
+                <h:form>
+                    <h:outputText value="#{utilisateurController.selected.prenom} #{utilisateurController.selected.nom} " 
+                                  style="color:blue;font-family: Arial, Helvetica, sans-serif;">
+                    </h:outputText>
+                    <h:commandButton id="dynaButton" action="moncompte?faces-redirect=true" style="height: 30px; width: 30px;" image="resources/images/moncompte.png"/>
+                    <h:commandButton action="#{utilisateurController.logout}" style="height: 30px; width: 30px;" image="resources/images/deconnection.png"/>
+                    <p:menu overlay="true" trigger="dynaButton" my="left top" at="left bottom">
+                        <p:menuitem value="Mon compte" action="moncompte?faces-redirect=true"  />
+                        <p:menuitem value="Mes réservations" action="historiqueReservation?faces-redirect=true"/>
+                        <p:menuitem value="Mon historique" action="historique?faces-redirect=true"/>
+                    </p:menu>
+                </h:form>
+            </div>
+        </div>
+
+        <h1 style="margin-top: 0px; text-shadow: 10px 5px 5px #767676;">Recherche d'installations</h1>       
+        <h:form id="search-form">
+            <p:focus />
+            <p:panelGrid columns="11" styleClass="ui-panelgrid-blank" style="margin-left: auto; margin-right: auto;">
+<!--                <p:message for="activity-filter" />
+                <p:message for="place" />-->
+                <p:outputLabel styleClass="text" for="activity-filter" value="Activité :" />
+                <p:autoComplete id="activity-filter" value="#{installationController.activity}" completeMethod="#{activiteController.completeActivity}" maxResults="15" />
+                <p:outputLabel styleClass="text" for="place" value="Lieu :" />
+                <p:autoComplete value="#{installationController.place}" id="place" completeMethod="#{installationController.completePlace}" maxResults="15" />
+<!--                <p:outputLabel styleClass="text" for="start" value="Début :" />
+                <p:calendar id="start" value="" showOn="both" readonlyInput="true" />-->
+                <p:commandButton value="Chercher" style="background-color:blue; color: white;" action="recherche?faces-redirect=true&amp;includeViewParams=true" ajax="false" />                           
+<!--                <p:commandButton type="cancel" style="background-color:green; color: white;" value="Effacer" update="search-form" process="@this" >
+                    <p:resetInput target="search-form" clearModel="true" />
+                </p:commandButton>
+                <p:commandButton value="GéoLoc" style="background-color:purple; color: white;" onclick="geoLoc()"/>-->
+                    <h:button image="resources/images/gps.png" style="height: 40px; width: 40px;" outcome="recherche">
+                    <f:param name="activity" value="" />
+                    <f:param name="place" value="" />
+                    </h:button>
+
+            </p:panelGrid>
+
+            <center>
+                <p:gmap id="geoMap" rendered="#{not empty installationController.results}" widgetVar="geoMap" center="#{installationController.centerGeoMap}" zoom="14" type="ROADMAP"
+                        style="width:90%;height:500px; border: 3px groove blue; border-radius: 20px; margin-top: 20px;" model="#{installationController.mapModel}" >
+                    <p:ajax event="geocode" listener="#{installationController.onGeocode}" update="@this" />
+                    <p:ajax event="overlaySelect" listener="#{installationController.onMarkerSelect}" />
+
+                    <p:gmapInfoWindow>
+                        <p:panel style="border:0px;" header="#{installationController.selectedInstalaltion.nomInstallation}" >
+                            <h:outputText value="#{installationController.selectedInstalaltion.adresse}" />
+                            <br/>
+                            <p:button value="Plus d'infos" style="background-color: blue; margin-top: 10px;border: 2px groove blue; color: white;" outcome="installation">
+                                <f:param name="id" value="#{installationController.selectedInstalaltion.numInstallation}" />
+                            </p:button>
+                        </p:panel>
+                    </p:gmapInfoWindow>
+
+                </p:gmap>
+            </center>
+        </h:form>
+        <p:messages showDetail="true" autoUpdate="true" for="noresults" />
+        <p:growl for="bookingConf" />
+    </h:body>
+</html>

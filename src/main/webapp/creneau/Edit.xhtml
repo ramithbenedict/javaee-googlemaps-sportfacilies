@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <f:metadata>
+            <f:viewAction action="#{utilisateurController.checkAdmin}" />
+        </f:metadata>
+    </h:head>
+    <ui:composition>
+
+        <p:dialog id="CreneauEditDlg" widgetVar="CreneauEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCreneauTitle}">
+            <h:form id="CreneauEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{creneauController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditCreneauLabel_numCreneau}" for="numCreneau" />
+                        <p:inputText id="numCreneau" value="#{creneauController.selected.numCreneau}" title="#{bundle.EditCreneauTitle_numCreneau}" required="true" requiredMessage="#{bundle.EditCreneauRequiredMessage_numCreneau}"/>
+                        <p:outputLabel value="#{bundle.EditCreneauLabel_dateCreneau}" for="dateCreneau" />
+                        <p:calendar id="dateCreneau" pattern="MM/dd/yyyy" value="#{creneauController.selected.dateCreneau}" title="#{bundle.EditCreneauTitle_dateCreneau}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditCreneauLabel_heure}" for="heure" />
+                        <p:inputText id="heure" value="#{creneauController.selected.heure}" title="#{bundle.EditCreneauTitle_heure}" />
+                        <p:outputLabel value="#{bundle.EditCreneauLabel_prix}" for="prix" />
+                        <p:inputText id="prix" value="#{creneauController.selected.prix}" title="#{bundle.EditCreneauTitle_prix}" />
+                        <p:outputLabel value="#{bundle.EditCreneauLabel_numInstallation}" for="numInstallation" />
+                        <p:selectOneMenu id="numInstallation" value="#{creneauController.selected.numInstallation}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{installationController.itemsAvailableSelectOne}"
+                                           var="numInstallationItem"
+                                           itemValue="#{numInstallationItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditCreneauLabel_numUtilisateur}" for="numUtilisateur" />
+                        <p:selectOneMenu id="numUtilisateur" value="#{creneauController.selected.numUtilisateur}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{utilisateurController.itemsAvailableSelectOne}"
+                                           var="numUtilisateurItem"
+                                           itemValue="#{numUtilisateurItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{creneauController.update}" value="#{bundle.Save}" update="display,:CreneauListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CreneauEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CreneauEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

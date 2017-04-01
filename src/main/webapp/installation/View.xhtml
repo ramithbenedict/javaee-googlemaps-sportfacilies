@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <f:metadata>
+            <f:viewAction action="#{utilisateurController.checkAdmin}" />
+        </f:metadata>
+    </h:head>
+    <ui:composition>
+
+        <p:dialog id="InstallationViewDlg" widgetVar="InstallationViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewInstallationTitle}">
+            <h:form id="InstallationViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{installationController.selected != null}">
+                        <h:outputText value="#{bundle.ViewInstallationLabel_numInstallation}"/>
+                        <h:outputText value="#{installationController.selected.numInstallation}" title="#{bundle.ViewInstallationTitle_numInstallation}"/>
+                        <h:outputText value="#{bundle.ViewInstallationLabel_nomInstallation}"/>
+                        <h:outputText value="#{installationController.selected.nomInstallation}" title="#{bundle.ViewInstallationTitle_nomInstallation}"/>
+                        <h:outputText value="#{bundle.ViewInstallationLabel_nomEquipement}"/>
+                        <h:outputText value="#{installationController.selected.nomEquipement}" title="#{bundle.ViewInstallationTitle_nomEquipement}"/>
+                        <h:outputText value="#{bundle.ViewInstallationLabel_departement}"/>
+                        <h:outputText value="#{installationController.selected.departement}" title="#{bundle.ViewInstallationTitle_departement}"/>
+                        <h:outputText value="#{bundle.ViewInstallationLabel_commune}"/>
+                        <h:outputText value="#{installationController.selected.commune}" title="#{bundle.ViewInstallationTitle_commune}"/>
+                        <h:outputText value="#{bundle.ViewInstallationLabel_gpsX}"/>
+                        <h:outputText value="#{installationController.selected.gpsX}" title="#{bundle.ViewInstallationTitle_gpsX}"/>
+                        <h:outputText value="#{bundle.ViewInstallationLabel_gpsY}"/>
+                        <h:outputText value="#{installationController.selected.gpsY}" title="#{bundle.ViewInstallationTitle_gpsY}"/>
+                        <h:outputText value="#{bundle.ViewInstallationLabel_handicapM}"/>
+                        <p:selectBooleanCheckbox value="#{installationController.selected.handicapM}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewInstallationLabel_handicapS}"/>
+                        <p:selectBooleanCheckbox value="#{installationController.selected.handicapS}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewInstallationLabel_longueur}"/>
+                        <h:outputText value="#{installationController.selected.longueur}" title="#{bundle.ViewInstallationTitle_longueur}"/>
+                        <h:outputText value="#{bundle.ViewInstallationLabel_largeur}"/>
+                        <h:outputText value="#{installationController.selected.largeur}" title="#{bundle.ViewInstallationTitle_largeur}"/>
+                        <h:outputText value="#{bundle.ViewInstallationLabel_hauteur}"/>
+                        <h:outputText value="#{installationController.selected.hauteur}" title="#{bundle.ViewInstallationTitle_hauteur}"/>
+                        <h:outputText value="#{bundle.ViewInstallationLabel_eclairage}"/>
+                        <p:selectBooleanCheckbox value="#{installationController.selected.eclairage}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewInstallationLabel_adresse}"/>
+                        <h:outputText value="#{installationController.selected.adresse}" title="#{bundle.ViewInstallationTitle_adresse}"/>
+                        <h:outputText value="#{bundle.ViewInstallationLabel_numUtilisateur}"/>
+                        <h:outputText value="#{installationController.selected.numUtilisateur}" title="#{bundle.ViewInstallationTitle_numUtilisateur}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="InstallationViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

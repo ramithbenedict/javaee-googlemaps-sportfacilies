@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:metadata>
+            <f:viewAction action="#{utilisateurController.checkAdmin}" />
+        </f:metadata>
+    </h:head>
+    
+    <ui:composition>
+
+        <p:dialog id="ActiviteCreateDlg" widgetVar="ActiviteCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateActiviteTitle}">
+            <h:form id="ActiviteCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{activiteController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateActiviteLabel_numActivite}" for="numActivite" />
+                        <p:inputText id="numActivite" value="#{activiteController.selected.numActivite}" title="#{bundle.CreateActiviteTitle_numActivite}" required="true" requiredMessage="#{bundle.CreateActiviteRequiredMessage_numActivite}"/>
+                        <p:outputLabel value="#{bundle.CreateActiviteLabel_nomActivite}" for="nomActivite" />
+                        <p:inputText id="nomActivite" value="#{activiteController.selected.nomActivite}" title="#{bundle.CreateActiviteTitle_nomActivite}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{activiteController.create}" value="#{bundle.Save}" update="display,:ActiviteListForm:datalist,:growl" oncomplete="handleSubmit(args,'ActiviteCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ActiviteCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <f:metadata>
+            <f:viewAction action="#{utilisateurController.checkAdmin}" />
+        </f:metadata>
+    </h:head>
+    <ui:composition>
+
+        <p:dialog id="InstallationEditDlg" widgetVar="InstallationEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditInstallationTitle}">
+            <h:form id="InstallationEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{installationController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditInstallationLabel_numInstallation}" for="numInstallation" />
+                        <p:inputText id="numInstallation" value="#{installationController.selected.numInstallation}" title="#{bundle.EditInstallationTitle_numInstallation}" required="true" requiredMessage="#{bundle.EditInstallationRequiredMessage_numInstallation}"/>
+                        <p:outputLabel value="#{bundle.EditInstallationLabel_nomInstallation}" for="nomInstallation" />
+                        <p:inputText id="nomInstallation" value="#{installationController.selected.nomInstallation}" title="#{bundle.EditInstallationTitle_nomInstallation}" />
+                        <p:outputLabel value="#{bundle.EditInstallationLabel_nomEquipement}" for="nomEquipement" />
+                        <p:inputText id="nomEquipement" value="#{installationController.selected.nomEquipement}" title="#{bundle.EditInstallationTitle_nomEquipement}" />
+                        <p:outputLabel value="#{bundle.EditInstallationLabel_departement}" for="departement" />
+                        <p:inputText id="departement" value="#{installationController.selected.departement}" title="#{bundle.EditInstallationTitle_departement}" />
+                        <p:outputLabel value="#{bundle.EditInstallationLabel_commune}" for="commune" />
+                        <p:inputText id="commune" value="#{installationController.selected.commune}" title="#{bundle.EditInstallationTitle_commune}" />
+                        <p:outputLabel value="#{bundle.EditInstallationLabel_gpsX}" for="gpsX" />
+                        <p:inputText id="gpsX" value="#{installationController.selected.gpsX}" title="#{bundle.EditInstallationTitle_gpsX}" />
+                        <p:outputLabel value="#{bundle.EditInstallationLabel_gpsY}" for="gpsY" />
+                        <p:inputText id="gpsY" value="#{installationController.selected.gpsY}" title="#{bundle.EditInstallationTitle_gpsY}" />
+                        <p:outputLabel value="#{bundle.EditInstallationLabel_handicapM}" for="handicapM" />
+                        <p:selectBooleanCheckbox id="handicapM" value="#{installationController.selected.handicapM}" />
+                        <p:outputLabel value="#{bundle.EditInstallationLabel_handicapS}" for="handicapS" />
+                        <p:selectBooleanCheckbox id="handicapS" value="#{installationController.selected.handicapS}" />
+                        <p:outputLabel value="#{bundle.EditInstallationLabel_longueur}" for="longueur" />
+                        <p:inputText id="longueur" value="#{installationController.selected.longueur}" title="#{bundle.EditInstallationTitle_longueur}" />
+                        <p:outputLabel value="#{bundle.EditInstallationLabel_largeur}" for="largeur" />
+                        <p:inputText id="largeur" value="#{installationController.selected.largeur}" title="#{bundle.EditInstallationTitle_largeur}" />
+                        <p:outputLabel value="#{bundle.EditInstallationLabel_hauteur}" for="hauteur" />
+                        <p:inputText id="hauteur" value="#{installationController.selected.hauteur}" title="#{bundle.EditInstallationTitle_hauteur}" />
+                        <p:outputLabel value="#{bundle.EditInstallationLabel_eclairage}" for="eclairage" />
+                        <p:selectBooleanCheckbox id="eclairage" value="#{installationController.selected.eclairage}" />
+                        <p:outputLabel value="#{bundle.EditInstallationLabel_adresse}" for="adresse" />
+                        <p:inputText id="adresse" value="#{installationController.selected.adresse}" title="#{bundle.EditInstallationTitle_adresse}" />
+                        <p:outputLabel value="#{bundle.EditInstallationLabel_numUtilisateur}" for="numUtilisateur" />
+                        <p:selectOneMenu id="numUtilisateur" value="#{installationController.selected.numUtilisateur}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{utilisateurController.itemsAvailableSelectOne}"
+                                           var="numUtilisateurItem"
+                                           itemValue="#{numUtilisateurItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{installationController.update}" value="#{bundle.Save}" update="display,:InstallationListForm:datalist,:growl" oncomplete="handleSubmit(args, 'InstallationEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="InstallationEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:metadata>
+            <f:viewAction action="#{utilisateurController.checkAdmin}" />
+        </f:metadata>
+    </h:head>
+    
+    <ui:composition>
+
+        <p:dialog id="ActiviteViewDlg" widgetVar="ActiviteViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewActiviteTitle}">
+            <h:form id="ActiviteViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{activiteController.selected != null}">
+                        <h:outputText value="#{bundle.ViewActiviteLabel_numActivite}"/>
+                        <h:outputText value="#{activiteController.selected.numActivite}" title="#{bundle.ViewActiviteTitle_numActivite}"/>
+                        <h:outputText value="#{bundle.ViewActiviteLabel_nomActivite}"/>
+                        <h:outputText value="#{activiteController.selected.nomActivite}" title="#{bundle.ViewActiviteTitle_nomActivite}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ActiviteViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

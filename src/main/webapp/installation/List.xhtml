@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <f:metadata>
+            <f:viewAction action="#{utilisateurController.checkAdmin}" />
+        </f:metadata>
+    </h:head>
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListInstallationTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="InstallationListForm">
+                <p:panel header="#{bundle.ListInstallationTitle}">
+                    <p:dataTable id="datalist" value="#{installationController.items}" var="item"
+                                 selectionMode="single" selection="#{installationController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.numInstallation}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationTitle_numInstallation}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numInstallation}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationTitle_nomInstallation}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nomInstallation}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationTitle_nomEquipement}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nomEquipement}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationTitle_departement}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.departement}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationTitle_commune}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.commune}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationTitle_gpsX}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.gpsX}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationTitle_gpsY}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.gpsY}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationTitle_handicapM}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.handicapM}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationTitle_handicapS}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.handicapS}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationTitle_longueur}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.longueur}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationTitle_largeur}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.largeur}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationTitle_hauteur}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.hauteur}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationTitle_eclairage}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.eclairage}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationTitle_adresse}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.adresse}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListInstallationTitle_numUtilisateur}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numUtilisateur}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{installationController.prepareCreate}" update=":InstallationCreateForm" oncomplete="PF('InstallationCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":InstallationViewForm" oncomplete="PF('InstallationViewDialog').show()" disabled="#{empty installationController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":InstallationEditForm" oncomplete="PF('InstallationEditDialog').show()" disabled="#{empty installationController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{installationController.destroy}" update=":growl,datalist" disabled="#{empty installationController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>
